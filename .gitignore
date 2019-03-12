@@ -6,7 +6,7 @@ webapp/dist
 /out-tsc
 
 # dependencies
-webapp/node_modules
+/webapp/node_modules
 
 # IDEs and editors
 /.idea

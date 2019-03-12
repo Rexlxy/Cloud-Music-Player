@@ -3,22 +3,16 @@
   <h1>Cloud Music Player</h1>
 
   <!-- Player -->
-<mat-card>
-  <h3>{{curIndex? files[curIndex].Name  : 'Choose a song to play'}}</h3>
-  <audio (ended)="nextSong()" controls style="width: 500px" #player>
-    <source src="{{audioUrl}}" type="audio/mp3">
+<mat-card class="player-card">
+  <h3>{{musicPlaying? musicPlaying.Name  : 'Choose a song to play'}}</h3>
+  <audio class="audio" (ended)="nextSong()" controls #player>
+    <source src="{{musicLink()}}" type="audio/mp3">
   </audio>
+
   <mat-icon (click)="prevSong()">skip_previous</mat-icon>
   <mat-icon (click)="nextSong()">skip_next</mat-icon>
 </mat-card>
 
 
-<mat-card class="file-list-card">
-  <mat-list role="list" *ngFor="let file of files; let i = index">
-    <mat-card>
-    <mat-list-item role="listitem" (click)="playMusic(i)"><mat-icon *ngIf="file.isPlaying">play_arrow</mat-icon>{{file.Name}}</mat-list-item>
-    </mat-card>
-  </mat-list>
-</mat-card>
-
+  <app-file-explorer (musicSelect)="playMusic($event)" (playListSelect)="updatePlayList($event)"> </app-file-explorer>
 </div>

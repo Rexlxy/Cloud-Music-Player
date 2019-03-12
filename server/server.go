@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 const (
@@ -35,9 +36,9 @@ func getFolder(w http.ResponseWriter, r *http.Request) {
 	// parse parameter
 	r.ParseForm()
 	log.Println(r.Form)
-	folderNameParam := r.Form["folderName"]
+	folderNameParam := r.Form["path"]
 	if len(folderNameParam) == 0 {
-		http.Error(w, "Please include 'folderName' parameter", http.StatusBadRequest)
+		http.Error(w, "Please include 'path' parameter", http.StatusBadRequest)
 		return
 	}
 
@@ -57,9 +58,9 @@ func getFile(w http.ResponseWriter, r *http.Request) {
 	// parse parameter
 	r.ParseForm()
 	log.Println(r.Form)
-	filePathParam := r.Form["filePath"]
+	filePathParam := r.Form["path"]
 	if len(filePathParam) == 0 {
-		http.Error(w, "Please include 'filePath' parameter", http.StatusBadRequest)
+		http.Error(w, "Please include 'path' parameter", http.StatusBadRequest)
 		return
 	}
 
@@ -91,7 +92,7 @@ func getFolderContents(path string) ([]FileModel, error) {
 
 	fileInfoList := []FileModel{}
 	for _, f := range files {
-		fileInfoList = append(fileInfoList, toFileModel(f))
+		fileInfoList = append(fileInfoList, toFileModel(path, f))
 	}
 	return fileInfoList, nil
 }
@@ -100,9 +101,11 @@ type FileModel struct {
 	Name  string
 	Size  int64
 	IsDir bool
+	Path  string
 }
 
-func toFileModel(f os.FileInfo) FileModel {
-	fileInfo := FileModel{f.Name(), f.Size(), f.IsDir()}
+func toFileModel(folderPath string, f os.FileInfo) FileModel {
+	relPath, _ := filepath.Rel(ROOT_FOLDER, filepath.Join(folderPath, f.Name()))
+	fileInfo := FileModel{f.Name(), f.Size(), f.IsDir(), relPath}
 	return fileInfo
 }

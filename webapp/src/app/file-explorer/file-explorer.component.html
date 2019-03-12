@@ -1,0 +1,20 @@
+
+<mat-card class="file-list-card">
+  <mat-list-item class = "nav-bar"><mat-icon *ngIf="folderStack.length" (click)="lastFolder()">arrow_back</mat-icon></mat-list-item>
+
+  <mat-list role="list" *ngFor="let file of files; let i = index">
+    <!--  Music -->
+    <mat-list-item *ngIf="!file.IsDir" role="listitem" (click)="selectMusic(file)">
+      <div class="width-30"><mat-icon *ngIf="file.isPlaying">play_arrow</mat-icon></div>
+      <mat-icon class="icon">music_note</mat-icon> {{file.Name}}
+    </mat-list-item>
+
+    <!--  Folder -->
+    <mat-list-item *ngIf="file.IsDir" role="listitem" (click)="nextFolder(i)" >
+      <div class="width-30"></div>
+      <mat-icon class="icon">folder</mat-icon>{{file.Name}}
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+  </mat-list>
+</mat-card>

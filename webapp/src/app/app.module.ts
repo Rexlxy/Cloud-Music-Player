@@ -13,10 +13,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
+import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FileExplorerComponent
   ],
   imports: [
     HttpClientModule,
