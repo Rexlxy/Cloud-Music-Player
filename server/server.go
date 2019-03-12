@@ -15,46 +15,56 @@ const (
 )
 
 func main() {
-	http.HandleFunc("/folder", getFolder)
-	http.HandleFunc("/", serveMainPage)
-	http.HandleFunc("/file", getFile)
+	http.HandleFunc("/api/folder", getFolder)
+	http.HandleFunc("/api/", serveMainPage)
+	http.HandleFunc("/api/file", getFile)
 	http.ListenAndServe(":8080", nil)
 }
 
 ///////////////////////////////////////////  Handle  Functions ////////////////////////////////////////////
 
 func serveMainPage(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/" {
-		http.ServeFile(w, r, "../web/dist/index.html") ///// + r.URL.Path)
-	} else {
-		http.ServeFile(w, r, "."+r.URL.Path)
-	}
+	// if r.URL.Path == "/" {
+	http.ServeFile(w, r, "../webapp/dist/webapp/index.html") ///// + r.URL.Path)
+	// } else {
+	// 	http.ServeFile(w, r, "."+r.URL.Path)
+	// }
 }
 
 func getFolder(w http.ResponseWriter, r *http.Request) {
 	// parse parameter
 	r.ParseForm()
 	log.Println(r.Form)
-	folderName := r.Form["folderName"]
-
-	path := ROOT_FOLDER
-	if len(folderName) != 0 {
-		path = path + "/" + folderName[0]
+	folderNameParam := r.Form["folderName"]
+	if len(folderNameParam) == 0 {
+		http.Error(w, "Please include 'folderName' parameter", http.StatusBadRequest)
+		return
 	}
 
 	// handle
+	path := ROOT_FOLDER + "/" + folderNameParam[0]
 	files, err := getFolderContents(path)
-
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
 	// write data to response
 	w.Header().Set(CONTENT_TYPE, APPLICATOIN_JSON)
-	if err != nil {
-		json.NewEncoder(w).Encode(err)
-	}
 	json.NewEncoder(w).Encode(files)
 }
 
 func getFile(w http.ResponseWriter, r *http.Request) {
-	path := ROOT_FOLDER + "/Jay/10 外婆.mp3"
+	// parse parameter
+	r.ParseForm()
+	log.Println(r.Form)
+	filePathParam := r.Form["filePath"]
+	if len(filePathParam) == 0 {
+		http.Error(w, "Please include 'filePath' parameter", http.StatusBadRequest)
+		return
+	}
+
+	// handle
+	path := ROOT_FOLDER + "/" + filePathParam[0]
 	stat, err := os.Stat(path)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
