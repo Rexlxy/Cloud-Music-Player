@@ -8,7 +8,7 @@
     <h3>Play List</h3>
     <mat-list role="list" *ngFor="let music of playList; let i = index">
       <mat-list-item  role="listitem" (click)="playMusic(i)">
-        <span><span class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></span>{{music.Name}}</span>
+        <div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>
         <mat-icon (click)="this.playListService.removeMusic(i)">clear</mat-icon>
       </mat-list-item>
       <mat-divider></mat-divider>

@@ -39,3 +39,10 @@
   justify-content: space-between;
   padding: 0;
 }
+
+
+.play-icon-and-name {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
