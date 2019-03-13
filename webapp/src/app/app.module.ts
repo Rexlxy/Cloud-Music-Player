@@ -18,7 +18,7 @@ import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 @NgModule({
   declarations: [
     AppComponent,
-    FileExplorerComponent
+    FileExplorerComponent,
   ],
   imports: [
     HttpClientModule,

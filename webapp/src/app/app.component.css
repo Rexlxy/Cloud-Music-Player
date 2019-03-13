@@ -1,9 +1,9 @@
-.file-list-card {
-  margin-top: 20px;
-}
-
 .main-container {
   width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .player-card {
@@ -12,9 +12,30 @@
   bottom: 0;
   left: 0;
   z-index: 999;
-  /*background-color: skyblue;*/
+}
+
+.width-30 {
+  width: 30px;
 }
 
 .audio {
   width: 50%;
+}
+
+.play-list {
+  margin: 0.5em;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.file-explorer  {
+  min-width: 30%;
+  margin: 0.5em;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+::ng-deep .play-list .mat-list-item-content {
+  justify-content: space-between;
+  padding: 0;
 }

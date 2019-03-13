@@ -1,12 +1,17 @@
 
 <mat-card class="file-list-card">
-  <mat-list-item class = "nav-bar"><mat-icon *ngIf="folderStack.length" (click)="lastFolder()">arrow_back</mat-icon></mat-list-item>
+  <h3>Music Library</h3>
+  <mat-list-item class = "nav-bar">
+    <button mat-flat-button *ngIf="folderStack.length" (click)="lastFolder()">
+      <mat-icon >arrow_back</mat-icon>
+    </button>
+  </mat-list-item>
 
   <mat-list role="list" *ngFor="let file of files; let i = index">
     <!--  Music -->
     <mat-list-item *ngIf="!file.IsDir" role="listitem" (click)="selectMusic(file)">
-      <div class="width-30"><mat-icon *ngIf="file.isPlaying">play_arrow</mat-icon></div>
-      <mat-icon class="icon">music_note</mat-icon> {{file.Name}}
+      <mat-icon class="icon">music_note</mat-icon>
+      {{file.Name}}
     </mat-list-item>
 
     <!--  Folder -->

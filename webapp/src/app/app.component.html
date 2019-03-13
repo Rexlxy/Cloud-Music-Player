@@ -1,18 +1,29 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<h1>Cloud Music Player</h1>
 <div class="main-container">
-  <h1>Cloud Music Player</h1>
 
-  <!-- Player -->
+  <app-file-explorer class="file-explorer" (musicSelect)="addMusicToList($event)" (playListSelect)="addListToList($event)"> </app-file-explorer>
+
+  <mat-card class="play-list">
+    <h3>Play List</h3>
+    <mat-list role="list" *ngFor="let music of playList; let i = index">
+      <mat-list-item  role="listitem" (click)="playMusic(i)">
+        <span><span class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></span>{{music.Name}}</span>
+        <mat-icon (click)="this.playListService.removeMusic(i)">clear</mat-icon>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-card>
+
+</div>
+
+<!-- Player -->
 <mat-card class="player-card">
-  <h3>{{musicPlaying? musicPlaying.Name  : 'Choose a song to play'}}</h3>
-  <audio class="audio" (ended)="nextSong()" controls #player>
-    <source src="{{musicLink()}}" type="audio/mp3">
+  <h3>{{curMusic ? curMusic.Name  : 'Choose a song to play'}}</h3>
+  <audio class="audio" (ended)="this.nextSong()" controls #player>
+    <source type="audio/mp3" #playerSource>
   </audio>
 
-  <mat-icon (click)="prevSong()">skip_previous</mat-icon>
-  <mat-icon (click)="nextSong()">skip_next</mat-icon>
+  <mat-icon (click)="this.prevSong()">skip_previous</mat-icon>
+  <mat-icon (click)="this.nextSong()">skip_next</mat-icon>
 </mat-card>
-
-
-  <app-file-explorer (musicSelect)="playMusic($event)" (playListSelect)="updatePlayList($event)"> </app-file-explorer>
-</div>

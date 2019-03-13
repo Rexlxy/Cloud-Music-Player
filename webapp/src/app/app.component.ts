@@ -1,6 +1,7 @@
-import { ElementRef, Component, ViewChild,  HostListener } from '@angular/core';
+import {ElementRef, Component, ViewChild, HostListener, OnInit} from '@angular/core';
 import {FileService} from './services/file/file.service';
 import {FileModel} from './models/Models';
+import {PlayListService} from './services/play-list/play-list.service';
 
 
 export enum KEY_CODE {
@@ -14,67 +15,51 @@ export enum KEY_CODE {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   title = 'app';
   @ViewChild('player') player:ElementRef;
-  musicPlaying: FileModel;
-  playList: Array<FileModel> = [];
+  @ViewChild('playerSource') playerSource:ElementRef;
 
-  constructor(private fileService: FileService) {
+  playList: Array<FileModel>;
+  curMusic: FileModel;
+  musicLink: string;
+
+  constructor(public fileService: FileService,
+              public playListService: PlayListService) {
+    this.playList = this.playListService.playList;
   }
 
-  public updatePlayList(playList: Array<FileModel>)  {
-    this.playList = playList;
+  ngOnInit(): void {
+    this.playListService.init(this.player, this.playerSource);
   }
 
-  public playMusic(music: FileModel) {
-    if (this.musicPlaying) {
-      this.musicPlaying.isPlaying = false;
-    }
-    this.loadSong(music);
-    this.player.nativeElement.play();
-    console.log('audio link',  this.musicLink());
+  public playMusic(index: number) {
+    this.curMusic = this.playListService.playMusic(index);
   }
 
   public nextSong() {
-    if (this.playList.length) {
-      let curIndex = this.playList.indexOf(this.musicPlaying);
-      let nextSong = (curIndex + 1) % this.playList.length;
-      this.playMusic(this.playList[nextSong]);
-    } else {
-      console.log("No next song");
-    }
+    this.curMusic = this.playListService.next();
   }
 
   public prevSong() {
-    if (this.playList.length) {
-      let curIndex = this.playList.indexOf(this.musicPlaying);
-      let prevSong = (curIndex - 1 + this.playList.length) % this.playList.length;
-      this.playMusic(this.playList[prevSong]);
+    this.curMusic = this.playListService.prev();
+  }
+
+  public addMusicToList(music: FileModel) {
+    if (this.playListService.contains(music)) {
+      alert(music.Name + " already in the play list");
     } else {
-      console.log("No prev song");
+      this.playListService.addMusic(music);
     }
   }
 
-  public loadSong(music: FileModel) {
-    this.musicPlaying = music;
-    this.musicPlaying.isPlaying = true;
-    this.player.nativeElement.load();
+  public addListToList(list: Array<FileModel>) {
+    this.playListService.addMusicList(list);
   }
 
-  public musicLink(): string {
-    if  (this.musicPlaying) {
-      return '/api/file?path=' + this.musicPlaying.Path;
-    }
-    return  null;
-  }
-
-
-  @HostListener('window:keyup', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
-
     if (event.keyCode === KEY_CODE.SPACE) {
       if (this.player.nativeElement.paused) {
         this.player.nativeElement.play();

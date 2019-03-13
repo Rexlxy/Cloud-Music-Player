@@ -48,9 +48,7 @@ export class FileExplorerComponent implements OnInit {
   }
 
   public selectMusic(music: FileModel) {
-    const playList =  this.files.filter(f  => !f.IsDir);
-    console.log('Emit play list', playList);
-    this.playListSelect.emit(playList);
+    // const playList =  this.files.filter(f  => !f.IsDir);
     this.musicSelect.emit(music);
   }
 }
