@@ -79,11 +79,6 @@ func getFile(w http.ResponseWriter, r *http.Request) {
 }
 
 /////////////////////////////////////////// Common Part ////////////////////////////////////////////
-type ApiError struct {
-	status int
-	error  string
-}
-
 func getFolderContents(path string) ([]FileModel, error) {
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
