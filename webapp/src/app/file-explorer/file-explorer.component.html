@@ -6,8 +6,8 @@
       <mat-icon >arrow_back</mat-icon>
     </button>
   </mat-list-item>
-
-  <mat-list role="list" *ngFor="let file of files; let i = index">
+  <div class="file-list">
+  <mat-list  role="list" *ngFor="let file of files; let i = index">
     <!--  Music -->
     <mat-list-item *ngIf="!file.IsDir" role="listitem" (click)="selectMusic(file)">
       <mat-icon class="icon">music_note</mat-icon>
@@ -19,7 +19,7 @@
       <div class="width-30"></div>
       <mat-icon class="icon">folder</mat-icon>{{file.Name}}
     </mat-list-item>
-    <mat-divider></mat-divider>
-
+    <!--<mat-divider></mat-divider>-->
   </mat-list>
+  </div>
 </mat-card>

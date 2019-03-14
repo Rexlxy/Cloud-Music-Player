@@ -1,4 +1,4 @@
-import {ElementRef, Injectable, ViewChild} from '@angular/core';
+import {ElementRef, Injectable} from '@angular/core';
 import {FileModel} from '../../models/Models';
 
 @Injectable({
@@ -10,13 +10,14 @@ export class PlayListService {
 
   public playList: Array<FileModel> = [];
   public curPlayingIndex: number;
+  public playMode: number;
   musicPlayer: ElementRef;
   musicPlayerSource: ElementRef;
-
 
   public init(player: ElementRef, playerSource: ElementRef)  {
     this.musicPlayer  = player;
     this.musicPlayerSource = playerSource;
+    this.playMode = 0;
     console.log('service', this.musicPlayer);
   }
 
@@ -82,4 +83,9 @@ export class PlayListService {
   public removeMusic(index: number) {
     this.playList.splice(index, 1);
   }
+
+  public nextPlayMode() {
+    this.playMode = (this.playMode + 1) % 3;
+  }
+
 }

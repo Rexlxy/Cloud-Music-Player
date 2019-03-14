@@ -2,8 +2,19 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import url( 'https://fonts.googleapis.com/css?family=Roboto:400,700%7CMaterial+Icons');
 
-body {
+html{
+  height: 100%;
   background-color: aliceblue;
+}
+
+body {
+  height: 100%;
+
+}
+
+app-root {
+  height: 100%;
+  overflow-y:scroll;
 }
 
 .center-text {

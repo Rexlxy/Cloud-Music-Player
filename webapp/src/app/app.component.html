@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<h1>Cloud Music Player</h1>
+<!--<h1>Cloud Music Player</h1>-->
 <div class="main-container">
 
   <app-file-explorer class="file-explorer" (musicSelect)="addMusicToList($event)" (playListSelect)="addListToList($event)"> </app-file-explorer>
@@ -16,8 +16,9 @@
 
     <div cdkDropList class="play-list" (cdkDropListDropped)="drop($event)">
       <div class="play-list-item" *ngFor="let music of playList; let i = index" (click)="playMusic(i)" cdkDrag>
+        <!--<div cdkDragHandle><button mat-raised-button>Basic</button></div>-->
         <div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>
-        <mat-icon (click)="this.playListService.removeMusic(i)">clear</mat-icon>
+        <mat-icon class="delete-icon" (click)="this.playListService.removeMusic(i)">clear</mat-icon>
       </div>
     </div>
   </mat-card>
@@ -31,6 +32,11 @@
     <source type="audio/mp3" #playerSource>
   </audio>
 
+  <div ngSwitch="{{this.playListService.playMode}}" (click)="playListService.nextPlayMode()">
+    <mat-icon *ngSwitchCase="0">repeat</mat-icon>
+    <mat-icon *ngSwitchCase="1">repeat_one</mat-icon>
+    <mat-icon *ngSwitchCase="2">shuffle</mat-icon>
+  </div>
   <mat-icon (click)="this.prevSong()">skip_previous</mat-icon>
   <mat-icon (click)="this.nextSong()">skip_next</mat-icon>
 </mat-card>

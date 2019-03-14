@@ -6,3 +6,9 @@
 .nav-bar {
   height: 20px;
 }
+
+.file-list  {
+  overflow:hidden;
+  overflow-y:scroll;
+  height: 500px;
+}
