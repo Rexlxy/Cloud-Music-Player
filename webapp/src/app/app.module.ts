@@ -13,6 +13,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FileExplorerComponent } from './file-explorer/file-explorer.component';
     MatCardModule,
     MatListModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,3 +5,7 @@
 body {
   background-color: aliceblue;
 }
+
+.center-text {
+  text-align: center;
+}

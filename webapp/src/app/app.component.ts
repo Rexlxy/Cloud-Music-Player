@@ -2,6 +2,7 @@ import {ElementRef, Component, ViewChild, HostListener, OnInit} from '@angular/c
 import {FileService} from './services/file/file.service';
 import {FileModel} from './models/Models';
 import {PlayListService} from './services/play-list/play-list.service';
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 
 export enum KEY_CODE {
@@ -23,7 +24,6 @@ export class AppComponent implements OnInit{
 
   playList: Array<FileModel>;
   curMusic: FileModel;
-  musicLink: string;
 
   constructor(public fileService: FileService,
               public playListService: PlayListService) {
@@ -56,6 +56,15 @@ export class AppComponent implements OnInit{
 
   public addListToList(list: Array<FileModel>) {
     this.playListService.addMusicList(list);
+  }
+
+  public drop(event: CdkDragDrop<string[]>) {
+    console.log('drop', event.previousIndex, event.currentIndex);
+    if (this.playListService.curPlayingIndex === event.previousIndex) {
+      this.playListService.curPlayingIndex = event.currentIndex;
+      console.log('updated current playing index', this.playListService.curPlayingIndex);
+    }
+    moveItemInArray(this.playList, event.previousIndex, event.currentIndex);
   }
 
   @HostListener('window:keydown', ['$event'])

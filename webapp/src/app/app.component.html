@@ -4,15 +4,22 @@
 
   <app-file-explorer class="file-explorer" (musicSelect)="addMusicToList($event)" (playListSelect)="addListToList($event)"> </app-file-explorer>
 
-  <mat-card class="play-list">
-    <h3>Play List</h3>
-    <mat-list role="list" *ngFor="let music of playList; let i = index">
-      <mat-list-item  role="listitem" (click)="playMusic(i)">
+  <mat-card class="play-list-container">
+    <h3 class="center-text">Play List</h3>
+    <!--<mat-list class="play-list" cdkDropList (cdkDropListDropped)="drop($event)" role="list" *ngFor="let music of playList; let i = index">-->
+      <!--<mat-list-item  class="play-list-item" cdkDrag role="listitem" (click)="playMusic(i)">-->
+        <!--<div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>-->
+        <!--<mat-icon (click)="this.playListService.removeMusic(i)">clear</mat-icon>-->
+      <!--</mat-list-item>-->
+      <!--<mat-divider></mat-divider>-->
+    <!--</mat-list>-->
+
+    <div cdkDropList class="play-list" (cdkDropListDropped)="drop($event)">
+      <div class="play-list-item" *ngFor="let music of playList; let i = index" (click)="playMusic(i)" cdkDrag>
         <div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>
         <mat-icon (click)="this.playListService.removeMusic(i)">clear</mat-icon>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-list>
+      </div>
+    </div>
   </mat-card>
 
 </div>
