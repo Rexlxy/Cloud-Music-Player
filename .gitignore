@@ -7,6 +7,7 @@ webapp/dist
 
 # dependencies
 /webapp/node_modules
+/webapp/package-lock.json
 
 # IDEs and editors
 /.idea
