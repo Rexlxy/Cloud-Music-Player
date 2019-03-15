@@ -14,7 +14,7 @@
       <!--<mat-divider></mat-divider>-->
     <!--</mat-list>-->
 
-    <div cdkDropList class="play-list" (cdkDropListDropped)="drop($event)">
+    <div cdkDropList class="play-list scrollable-list" (cdkDropListDropped)="drop($event)">
       <div class="play-list-item" *ngFor="let music of playList; let i = index" (click)="playMusic(i)" cdkDrag>
         <!--<div cdkDragHandle><button mat-raised-button>Basic</button></div>-->
         <div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>
@@ -28,15 +28,18 @@
 <!-- Player -->
 <mat-card class="player-card">
   <h3>{{curMusic ? curMusic.Name  : 'Choose a song to play'}}</h3>
-  <audio class="audio" (ended)="this.nextSong()" controls #player>
-    <source type="audio/mp3" #playerSource>
-  </audio>
+  <div class="player-and-buttons">
+    <audio (ended)="this.nextSong()" controls #player>
+      <source type="audio/mp3" #playerSource>
+    </audio>
 
-  <div ngSwitch="{{this.playListService.playMode}}" (click)="playListService.nextPlayMode()">
-    <mat-icon *ngSwitchCase="0">repeat</mat-icon>
-    <mat-icon *ngSwitchCase="1">repeat_one</mat-icon>
-    <mat-icon *ngSwitchCase="2">shuffle</mat-icon>
+    <div ngSwitch="{{this.playListService.playMode}}">
+      <button mat-icon-button color="basic" *ngSwitchCase="0" (click)="playListService.nextPlayMode()"><mat-icon>repeat</mat-icon></button>
+      <button mat-icon-button color="basic" *ngSwitchCase="1" (click)="playListService.nextPlayMode()"><mat-icon>repeat_one</mat-icon></button>
+      <button mat-icon-button color="basic" *ngSwitchCase="2" (click)="playListService.nextPlayMode()"><mat-icon>shuffle</mat-icon></button>
+      <button mat-icon-button color="basic"><mat-icon (click)="this.prevSong()">skip_previous</mat-icon></button>
+      <button mat-icon-button color="basic"><mat-icon (click)="this.nextSong()">skip_next</mat-icon></button>
+    </div>
   </div>
-  <mat-icon (click)="this.prevSong()">skip_previous</mat-icon>
-  <mat-icon (click)="this.nextSong()">skip_next</mat-icon>
+
 </mat-card>

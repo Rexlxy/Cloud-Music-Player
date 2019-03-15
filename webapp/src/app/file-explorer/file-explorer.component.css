@@ -1,14 +1,17 @@
 
+
 .icon {
   padding-right: 8px;
 }
 
-.nav-bar {
-  height: 20px;
+.nav-container {
+  justify-content: center;
+  position: relative;
 }
 
-.file-list  {
-  overflow:hidden;
-  overflow-y:scroll;
-  height: 500px;
+.nav-container button {
+  position: absolute;
+  top: -8px;
+  left: 0;
 }
+

@@ -20,3 +20,9 @@ app-root {
 .center-text {
   text-align: center;
 }
+
+.scrollable-list  {
+  overflow:hidden;
+  overflow-y:scroll;
+  height: 525px;
+}
