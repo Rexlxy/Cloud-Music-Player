@@ -43,8 +43,7 @@ func getFolder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// handle
-	path := ROOT_FOLDER + "/" + folderNameParam[0]
-	files, err := getFolderContents(path)
+	files, err := getFolderContents(folderNameParam[0])
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
@@ -65,7 +64,7 @@ func getFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// handle
-	path := ROOT_FOLDER + "/" + filePathParam[0]
+	path := filepath.Join(ROOT_FOLDER, filePathParam[0])
 	stat, err := os.Stat(path)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
@@ -79,28 +78,33 @@ func getFile(w http.ResponseWriter, r *http.Request) {
 }
 
 /////////////////////////////////////////// Common Part ////////////////////////////////////////////
-func getFolderContents(path string) ([]FileModel, error) {
-	files, err := ioutil.ReadDir(path)
+// func dfsRootDirectory(folder FileModel) ([]FileModel, error) {
+// 	contents, errr = getFolderContents(folder.Path)
+// }
+
+func getFolderContents(relPath string) ([]FileModel, error) {
+	files, err := ioutil.ReadDir(filepath.Join(ROOT_FOLDER, relPath))
 	if err != nil {
 		return nil, err
 	}
 
 	fileInfoList := []FileModel{}
 	for _, f := range files {
-		fileInfoList = append(fileInfoList, toFileModel(path, f))
+		fileInfoList = append(fileInfoList, toFileModel(relPath, f))
 	}
 	return fileInfoList, nil
 }
 
 type FileModel struct {
-	Name  string
-	Size  int64
-	IsDir bool
-	Path  string
+	Name     string
+	Size     int64
+	IsDir    bool
+	Path     string
+	FileList []FileModel
 }
 
-func toFileModel(folderPath string, f os.FileInfo) FileModel {
-	relPath, _ := filepath.Rel(ROOT_FOLDER, filepath.Join(folderPath, f.Name()))
-	fileInfo := FileModel{f.Name(), f.Size(), f.IsDir(), relPath}
+func toFileModel(relPath string, f os.FileInfo) FileModel {
+	filePath := filepath.Join(relPath, f.Name())
+	fileInfo := FileModel{f.Name(), f.Size(), f.IsDir(), filePath, []FileModel{}}
 	return fileInfo
 }
