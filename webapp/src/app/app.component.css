@@ -7,21 +7,11 @@
   margin-bottom: 10em;
 }
 
-.player-card {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-}
 
 .width-30 {
   width: 30px;
 }
 
-audio {
-  width: calc(100% - 140px);
-}
 
 .play-list-container {
   width: 40%;
@@ -113,11 +103,30 @@ audio {
   display: none;
 }
 
+/*audio {*/
+/*width: calc(100% - 140px);*/
+/*}*/
+
+
 .play-list-item:hover .delete-icon {
   display: inline-block;
 }
 
-.player-and-buttons {
+
+.player-card {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+
+.player-card .player-and-buttons {
   display: flex;
   align-items: center;
   flex-flow: row wrap;

@@ -1,0 +1,37 @@
+<h1 mat-dialog-title class="center-text" *ngIf="data.isMkdir">Create Folder in <span class="file-path"> root{{data.folderPath}}</span></h1>
+<h1 mat-dialog-title class="center-text" *ngIf="!data.isMkdir">Upload Music to <span class="file-path"> root{{data.folderPath}}</span></h1>
+<div mat-dialog-content>
+  <!--<h3>In Folder: </h3>-->
+
+  <mat-form-field *ngIf="data.isMkdir">
+    <input placeholder="New Folder Name" matInput [(ngModel)]="data.name">
+  </mat-form-field>
+
+  <div *ngIf="!data.isMkdir">
+    <input style="display: none" (change)="onFilesAdded()" type="file" accept="audio/mp3" #file multiple />
+  <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+    <div>
+      <button mat-raised-button color="primary" (click)="addFiles()">
+        Add .mp3
+      </button>
+      <span *ngIf="files.size > 0">Total Size: {{sumOfFileSize()}}mb</span>
+    </div>
+
+    <!-- This is the content of the dialog, containing a list of the files to upload -->
+    <mat-dialog-content fxFlex>
+      <mat-list>
+        <mat-list-item *ngFor="let file of files">
+          <h4 mat-line>{{file.name}}</h4>
+        </mat-list-item>
+      </mat-list>
+    </mat-dialog-content>
+  </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="basic" [disabled]="processing" (click)="onNoClick()">Cancel</button>
+  <!--<button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Save</button>-->
+  <button mat-raised-button color="basic" [disabled]="ifDisable()" (click)="save()">Save</button>
+  <mat-progress-bar *ngIf="processing" mode="indeterminate"></mat-progress-bar>
+</div>

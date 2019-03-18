@@ -35,7 +35,7 @@ export class PlayListService {
     }
     this.curPlayingIndex = index;
     this.currentPlaying().isPlaying = true;
-    this.musicPlayerSource.nativeElement.src = '/api/file?path=' + this.currentPlaying().Path;
+    this.musicPlayerSource.nativeElement.src = '/api/music-data/' + this.currentPlaying().Path;
     this.musicPlayer.nativeElement.load();
     this.musicPlayer.nativeElement.play();
     console.log('audio link',  this.musicPlayerSource.nativeElement.src);

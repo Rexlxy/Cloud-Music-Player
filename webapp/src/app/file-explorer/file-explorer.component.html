@@ -1,27 +1,62 @@
 
 <mat-card class="file-list-card">
   <div class = "nav-container">
-  <button mat-flat-button *ngIf="folderStack.length" (click)="lastFolder()">
+  <button class = "back-button" mat-flat-button *ngIf="folderStack.length" (click)="lastFolder()">
     <mat-icon >arrow_back</mat-icon>
   </button>
-  <h3 class="center-text">Music Library</h3>
+  <h3 class="center-text">Music Library <button mat-icon-button color="basic"><mat-icon (click)="logout()">exit_to_app</mat-icon></button>
+  </h3>
   </div>
 
   <!-- List-->
   <div class="scrollable-list">
   <mat-list  role="list" *ngFor="let file of files; let i = index">
+
     <!--  Music -->
-    <mat-list-item *ngIf="!file.IsDir" role="listitem" (click)="selectMusic(file)">
-      <mat-icon class="icon">music_note</mat-icon>
-      {{file.Name}}
+    <mat-list-item *ngIf="!file.IsDir" role="listitem">
+      <div (click)="selectMusic(file)">
+      <mat-icon class="icon">music_note</mat-icon>{{file.Name}}
+      </div>
+
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-icon-button color="basic" (click)="delete(i)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </div>
     </mat-list-item>
 
     <!--  Folder -->
-    <mat-list-item *ngIf="file.IsDir" role="listitem" (click)="nextFolder(i)" >
-      <div class="width-30"></div>
+    <mat-list-item *ngIf="file.IsDir" role="listitem" >
+      <div (click)="nextFolder(i)">
       <mat-icon class="icon">folder</mat-icon>{{file.Name}}
+      </div>
+
+      <div>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-icon-button color="basic" (click)="delete(i)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+      </div>
     </mat-list-item>
     <!--<mat-divider></mat-divider>-->
   </mat-list>
   </div>
+
+
+  <mat-card class = "folder-info-area">
+      <h4 >Current Folder: <span class="file-path">root{{curFolderPath}}</span> </h4>
+      <button title="Create folder" mat-icon-button color="basic" (click)="openDialog(true)"><mat-icon>create_new_folder</mat-icon></button>
+      <button title="Upload music" mat-icon-button color="basic" (click)="openDialog(false)"><mat-icon>cloud_upload</mat-icon></button>
+  </mat-card>
 </mat-card>

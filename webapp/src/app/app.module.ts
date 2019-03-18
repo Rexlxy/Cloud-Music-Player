@@ -14,12 +14,19 @@ import {MatListModule} from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { FileExplorerComponent } from './file-explorer/file-explorer.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {DialogComponent, FileExplorerComponent} from './file-explorer/file-explorer.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FileExplorerComponent,
+    DialogComponent,
+    LoginDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -34,9 +41,14 @@ import { FileExplorerComponent } from './file-explorer/file-explorer.component';
     MatListModule,
     MatCheckboxModule,
     MatIconModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    MatProgressBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent, LoginDialogComponent]
 })
 export class AppModule { }

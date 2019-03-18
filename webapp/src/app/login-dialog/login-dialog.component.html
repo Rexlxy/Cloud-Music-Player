@@ -1,0 +1,27 @@
+<h1 mat-dialog-title class="center-text">Admin Login</h1>
+<div *ngIf="!isAuthenticated">
+<div  mat-dialog-content>
+  <mat-form-field>
+  <input placeholder="Username" matInput [(ngModel)]="username">
+  </mat-form-field>
+  <mat-form-field>
+    <input placeholder="Password" matInput [(ngModel)]="password">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="basic" (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="basic" (click)="login()">Login</button>
+  <span>{{error}}</span>
+</div>
+</div>
+
+<div *ngIf="isAuthenticated">
+  <div mat-dialog-content>
+    <h3>Login Successfully!</h3>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="basic" (click)="onNoClick()">Close</button>
+  </div>
+</div>
+

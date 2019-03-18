@@ -1,5 +1,3 @@
-
-
 .icon {
   padding-right: 8px;
 }
@@ -9,9 +7,32 @@
   position: relative;
 }
 
-.nav-container button {
+.nav-container .back-button {
   position: absolute;
   top: -8px;
   left: 0;
 }
 
+.nav-container .title-area {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.upload-area {
+  width: 100%;
+  border: blue solid;
+  height: 70px
+}
+
+.folder-info-area {
+  background-color: whitesmoke;
+}
+
+::ng-deep .mat-list-item-content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

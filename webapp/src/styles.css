@@ -26,3 +26,7 @@ app-root {
   overflow-y:scroll;
   height: 525px;
 }
+
+span.file-path {
+  color: darkslateblue;
+}

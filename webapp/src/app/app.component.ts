@@ -3,6 +3,9 @@ import {FileService} from './services/file/file.service';
 import {FileModel} from './models/Models';
 import {PlayListService} from './services/play-list/play-list.service';
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {LoginDialogComponent} from './login-dialog/login-dialog.component';
+import {MatDialog} from '@angular/material';
+import {ApiService} from './services/api/api.service';
 
 
 export enum KEY_CODE {
@@ -26,8 +29,13 @@ export class AppComponent implements OnInit{
   curMusic: FileModel;
 
   constructor(public fileService: FileService,
-              public playListService: PlayListService) {
+              public playListService: PlayListService,
+              public dialog: MatDialog) {
+
     this.playList = this.playListService.playList;
+    ApiService.needToLogin.subscribe(d => {
+      this.openDialog();
+    });
   }
 
   ngOnInit(): void {
@@ -64,7 +72,23 @@ export class AppComponent implements OnInit{
       this.playListService.curPlayingIndex = event.currentIndex;
       console.log('updated current playing index', this.playListService.curPlayingIndex);
     }
+    else if(this.playListService.curPlayingIndex === event.currentIndex) {
+      this.playListService.curPlayingIndex = event.previousIndex;
+      console.log('updated current playing index', this.playListService.curPlayingIndex);
+    }
+
     moveItemInArray(this.playList, event.previousIndex, event.currentIndex);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '500px',
+      data: {name: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   @HostListener('window:keydown', ['$event'])
