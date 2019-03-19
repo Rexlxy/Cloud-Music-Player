@@ -137,7 +137,7 @@ func checkInternalError(err error, c *FileController) {
 	}
 }
 
-var ROOT_FOLDER string = "./music"
+var ROOT_FOLDER string = beego.AppConfig.String("musicFolder")
 
 func getFolderContents(relPath string) ([]FileModel, error) {
 	files, err := ioutil.ReadDir(filepath.Join(ROOT_FOLDER, relPath))
