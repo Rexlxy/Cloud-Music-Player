@@ -3,6 +3,7 @@ export class FileModel {
   Size: number;
   IsDir: boolean;
   Path: string;
+  IsPrivate: boolean;
 
   // UI
   isPlaying = false;

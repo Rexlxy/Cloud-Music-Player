@@ -34,7 +34,7 @@
     <!--  Folder -->
     <mat-list-item *ngIf="file.IsDir" role="listitem" >
       <div (click)="nextFolder(i)">
-      <mat-icon class="icon">folder</mat-icon>{{file.Name}}
+      <mat-icon class="icon">folder</mat-icon>{{file.Name}} &nbsp;&nbsp;<mat-icon class="icon" *ngIf="file.IsPrivate">{{userService.isLogin? 'lock_open' : 'lock'}}</mat-icon>
       </div>
 
       <div>

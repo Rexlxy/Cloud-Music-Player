@@ -17,8 +17,7 @@ export class LoginDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<LoginDialogComponent>,
-    public userService: UserService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    public userService: UserService) {
     this.isAuthenticated = false;
   }
 
@@ -34,6 +33,7 @@ export class LoginDialogComponent implements OnInit {
       console.log(result);
       if (result.Authenticated) {
         this.isAuthenticated = true;
+        this.userService.isLogin = true;
       } else {
         this.error = result.Message;
       }

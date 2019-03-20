@@ -8,6 +8,7 @@ export class PlayListService {
 
   constructor() { }
 
+
   public playList: Array<FileModel> = [];
   public curPlayingIndex: number;
   public playMode: number;
@@ -39,6 +40,7 @@ export class PlayListService {
     this.musicPlayer.nativeElement.load();
     this.musicPlayer.nativeElement.play();
     console.log('audio link',  this.musicPlayerSource.nativeElement.src);
+
     return this.currentPlaying();
   }
 

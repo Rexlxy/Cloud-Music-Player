@@ -19,11 +19,11 @@ export enum KEY_CODE {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   title = 'app';
-  @ViewChild('player') player:ElementRef;
-  @ViewChild('playerSource') playerSource:ElementRef;
+  @ViewChild('player') player: ElementRef;
+  @ViewChild('playerSource') playerSource: ElementRef;
 
   playList: Array<FileModel>;
   curMusic: FileModel;
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit{
 
   public addMusicToList(music: FileModel) {
     if (this.playListService.contains(music)) {
-      alert(music.Name + " already in the play list");
+      alert(music.Name + ' already in the play list');
     } else {
       this.playListService.addMusic(music);
     }
@@ -83,7 +83,6 @@ export class AppComponent implements OnInit{
   openDialog(): void {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
       width: '500px',
-      data: {name: ''}
     });
 
     dialogRef.afterClosed().subscribe(result => {

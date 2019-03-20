@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,6 +12,40 @@ import (
 
 	"github.com/astaxie/beego"
 )
+
+type AdminData struct {
+	LockedFolders []string
+}
+
+var LockedFolders map[string]bool
+
+func init() {
+	log.Println("Init, loading admin-data.json...")
+	LockedFolders = make(map[string]bool)
+
+	// read file
+	f, err := os.Open(filepath.Join(ROOT_FOLDER, "admin-data.json"))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	// decode json
+	decoder := json.NewDecoder(f)
+	for decoder.More() {
+		var data AdminData
+		err := decoder.Decode(&data)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		for _, folder := range data.LockedFolders {
+			LockedFolders[folder] = true
+		}
+	}
+
+	log.Println("admin-data.json loaded")
+}
 
 type FileController struct {
 	beego.Controller
@@ -153,16 +189,19 @@ func getFolderContents(relPath string) ([]FileModel, error) {
 }
 
 type FileModel struct {
-	Name     string
-	Size     int64
-	IsDir    bool
-	Path     string
-	FileList []FileModel
+	Name      string
+	Size      int64
+	IsDir     bool
+	Path      string
+	IsPrivate bool
+	FileList  []FileModel
 }
 
 func toFileModel(parentFolderRelPath string, f os.FileInfo) FileModel {
 	filePath := filepath.Join("/", parentFolderRelPath, f.Name())
-	fileInfo := FileModel{f.Name(), f.Size(), f.IsDir(), filePath, []FileModel{}}
+	isPrivate := false
+	_, isPrivate = LockedFolders[filePath]
+	fileInfo := FileModel{f.Name(), f.Size(), f.IsDir(), filePath, isPrivate, []FileModel{}}
 	return fileInfo
 }
 

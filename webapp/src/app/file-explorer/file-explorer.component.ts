@@ -5,6 +5,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {forkJoin, throwError} from 'rxjs';
 import {UserService} from '../services/user/user.service';
 import {catchError} from 'rxjs/operators';
+import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-file-explorer',
@@ -35,6 +36,16 @@ export class FileExplorerComponent implements OnInit {
   }
 
   public nextFolder(index: number) {
+    if (this.files[index].IsPrivate && !this.userService.isLogin) {
+      const dialogRef = this.dialog.open(LoginDialogComponent, {
+        width: '500px'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+      return;
+    }
     const folderPath = this.files[index].Path;
     this.fileService.getFolderContents(folderPath).subscribe(data => {
       this.files = FileModel.reorderList(data);
@@ -86,6 +97,7 @@ export class FileExplorerComponent implements OnInit {
 
   public logout() {
     this.userService.logout().subscribe(data => {
+      this.userService.isLogin = false;
       alert(data.Message);
     });
   }

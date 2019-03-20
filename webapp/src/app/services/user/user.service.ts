@@ -8,7 +8,12 @@ import {Md5} from 'ts-md5';
 })
 export class UserService {
 
-  constructor(private  apiService: ApiService) { }
+  isLogin = false;
+  constructor(private  apiService: ApiService) {
+    ApiService.needToLogin.subscribe(r => {
+      this.isLogin = false;
+    });
+  }
 
   public login(username: string, password: string): Observable<any> {
     let url =  '/api/user/login?';
