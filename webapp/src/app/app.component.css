@@ -5,6 +5,17 @@
   align-items: flex-start;
   justify-content: center;
   margin-bottom: 10em;
+  margin-top: 55px;
+}
+
+.top {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  left: 0;
+  background-color: black;
+  height: 50px;
 }
 
 
@@ -103,9 +114,10 @@
   display: none;
 }
 
-/*audio {*/
-/*width: calc(100% - 140px);*/
-/*}*/
+audio {
+  height: 35px;
+  width: 500px;
+}
 
 
 .play-list-item:hover .delete-icon {
@@ -113,20 +125,26 @@
 }
 
 
-.player-card {
+.bottom {
+  background-color: black;
   position: fixed;
   width: 100%;
   bottom: 0;
   left: 0;
   z-index: 999;
-
-  display: flex;
-  flex-flow: column;
-  align-items: center;
+  height: 70px;
 }
 
+.player-container {
+  display: flex;
+  flex-flow: column;
+}
 
-.player-card .player-and-buttons {
+.player-container span {
+  font-size: 0.9em;
+}
+
+.player-container .player-and-buttons {
   display: flex;
   align-items: center;
   flex-flow: row wrap;

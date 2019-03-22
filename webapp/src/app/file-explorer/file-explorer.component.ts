@@ -37,13 +37,7 @@ export class FileExplorerComponent implements OnInit {
 
   public nextFolder(index: number) {
     if (this.files[index].IsPrivate && !this.userService.isLogin) {
-      const dialogRef = this.dialog.open(LoginDialogComponent, {
-        width: '500px'
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
+      this.openLoginDialog()
       return;
     }
     const folderPath = this.files[index].Path;
@@ -70,6 +64,10 @@ export class FileExplorerComponent implements OnInit {
   }
 
   public delete(index: number) {
+    if (!this.userService.isLogin) {
+      this.openLoginDialog()
+      return;
+    }
     const toDelete = this.files[index];
     this.fileService.delete(toDelete.Path).subscribe(result => {
       console.log('Deleted', toDelete.Path);
@@ -102,7 +100,12 @@ export class FileExplorerComponent implements OnInit {
     });
   }
 
-  openDialog(isMkdir: boolean): void {
+  createFolderOrFile(isMkdir: boolean): void {
+    if (!this.userService.isLogin) {
+      this.openLoginDialog()
+      return;
+    }
+
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
       data: {name: '', isMkdir: isMkdir, folderPath: this.curFolderPath}
@@ -117,6 +120,16 @@ export class FileExplorerComponent implements OnInit {
           this.safeAppendSingle(result);
         }
       }
+    });
+  }
+
+  openLoginDialog() {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 }

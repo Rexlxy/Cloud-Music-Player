@@ -17,6 +17,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {DialogComponent, FileExplorerComponent} from './file-explorer/file-explorer.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
@@ -45,7 +46,8 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
     MatDialogModule,
     MatMenuModule,
     BrowserAnimationsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

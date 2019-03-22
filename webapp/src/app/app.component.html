@@ -1,34 +1,40 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <!--<h1>Cloud Music Player</h1>-->
-<div class="main-container">
 
+<mat-toolbar class="top" color="primary">
+  <mat-toolbar-row>
+    <span>Rex's Cloud Music Player</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="main-container">
   <app-file-explorer class="file-explorer" (musicSelect)="addMusicToList($event)" (playListSelect)="addListToList($event)"> </app-file-explorer>
 
   <mat-card class="play-list-container">
     <h3 class="center-text">Play List</h3>
-    <!--<mat-list class="play-list" cdkDropList (cdkDropListDropped)="drop($event)" role="list" *ngFor="let music of playList; let i = index">-->
-      <!--<mat-list-item  class="play-list-item" cdkDrag role="listitem" (click)="playMusic(i)">-->
-        <!--<div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>-->
-        <!--<mat-icon (click)="this.playListService.removeMusic(i)">clear</mat-icon>-->
-      <!--</mat-list-item>-->
-      <!--<mat-divider></mat-divider>-->
-    <!--</mat-list>-->
+
+    <div style="margin-top: 20%" *ngIf="playList.length == 0">
+      <h3 class="center-text"> Your play list is empty ~ </h3>
+    </div>
 
     <div cdkDropList class="play-list scrollable-list" (cdkDropListDropped)="drop($event)">
       <div class="play-list-item" *ngFor="let music of playList; let i = index" (click)="playMusic(i)" cdkDrag>
-        <!--<div cdkDragHandle><button mat-raised-button>Basic</button></div>-->
         <div class="play-icon-and-name"><div class="width-30"><mat-icon *ngIf="music.isPlaying">play_arrow</mat-icon></div>{{music.Name}}</div>
         <mat-icon class="delete-icon" (click)="this.playListService.removeMusic(i)">clear</mat-icon>
       </div>
     </div>
   </mat-card>
-
 </div>
 
 <!-- Player -->
-<mat-card class="player-card">
-  <h3>{{curMusic ? curMusic.Name  : 'Choose a song to play'}}</h3>
-  <div class="player-and-buttons">
+<!--<mat-card class="player-card">-->
+<mat-toolbar class="bottom" color="primary">
+  <!--<mat-toolbar-row>-->
+  <!--</mat-toolbar-row>-->
+
+  <mat-toolbar-row class="player-container" >
+    <span>{{curMusic ? curMusic.Name  : 'Click songs in play list to play'}}</span>
+    <div class="player-and-buttons">
     <audio (ended)="this.nextSong()" controls #player>
       <source type="audio/mp3" #playerSource>
     </audio>
@@ -41,5 +47,7 @@
       <button mat-icon-button color="basic"><mat-icon (click)="this.nextSong()">skip_next</mat-icon></button>
     </div>
   </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-</mat-card>
+<!--</mat-card>-->

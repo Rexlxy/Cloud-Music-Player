@@ -56,7 +56,7 @@
 
   <mat-card class = "folder-info-area">
       <h4 >Current Folder: <span class="file-path">root{{curFolderPath}}</span> </h4>
-      <button title="Create folder" mat-icon-button color="basic" (click)="openDialog(true)"><mat-icon>create_new_folder</mat-icon></button>
-      <button title="Upload music" mat-icon-button color="basic" (click)="openDialog(false)"><mat-icon>cloud_upload</mat-icon></button>
+      <button title="Create folder" mat-icon-button color="basic" (click)="createFolderOrFile(true)"><mat-icon>create_new_folder</mat-icon></button>
+      <button title="Upload music" mat-icon-button color="basic" (click)="createFolderOrFile(false)"><mat-icon>cloud_upload</mat-icon></button>
   </mat-card>
 </mat-card>
